@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @Sanaruca
 -  I’m interested in mobile apps
-- 🌱 I’m currently learning Angular
+- 🌱 I’m currently learning React Native
 -  I’m looking to collaborate on anywhere
 
 <!---
