@@ -2,7 +2,7 @@
 -  I’m interested in mobile apps
 - 🌱 I’m currently learning React Native
 -  I’m looking to collaborate on anywhere
-- 🐧 Linux enthusiast (beginner)
+- 🐧 Linux enthusiast
 
 <!---
 Sanaruca/Sanaruca is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
