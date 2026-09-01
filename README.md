@@ -1,11 +1,11 @@
-<div style="float: right; margin: 0 0 10px 10px; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; max-width: 310px;">
-  <a href="resume/resume-es.pdf" style="min-width: max-content;">
+<p align="right">
+  <a href="resume/resume-es.pdf">
     <img src="https://img.shields.io/badge/📄_Resume_ES-6CC644?style=for-the-badge" alt="Resume ES"/>
   </a>
-  <a href="resume/resume-en.pdf" style="min-width: max-content;">
+  <a href="resume/resume-en.pdf">
     <img src="https://img.shields.io/badge/📄_Resume_EN-4078c0?style=for-the-badge" alt="Resume EN"/>
   </a>
-</div>
+</p>
 
 - 👋 Hi, I’m @Sanaruca
 -  I’m interested in mobile apps
