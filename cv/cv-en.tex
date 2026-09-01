@@ -1,0 +1,371 @@
+% !TEX program = xelatex
+\documentclass[9pt, a4paper]{article}
+
+% =========================================================
+% 1. COMPATIBILITY AND ENCODING
+% =========================================================
+\usepackage{fontspec}
+\setmainfont{DM Sans}        % body (DM Sans)
+\setmonofont{IBM Plex Mono}[  % titles in monospace (via \ttfamily)
+    Path=/home/sanaruca/.fonts/,
+    UprightFont=IBMPlexMono-Regular.ttf,
+    BoldFont=IBMPlexMono-SemiBold.ttf,
+    ItalicFont=IBMPlexMono-Italic.ttf,
+    BoldItalicFont=IBMPlexMono-SemiBoldItalic.ttf,
+]  % the mono "bold" is SemiBold (thinner than Bold)
+\newfontfamily\PlexSans{IBM Plex Sans}[
+    Path=/home/sanaruca/.fonts/,
+    UprightFont=IBMPlexSans-Regular.ttf,
+    BoldFont=IBMPlexSans-Bold.ttf,
+    ItalicFont=IBMPlexSans-Italic.ttf,
+    BoldItalicFont=IBMPlexSans-BoldItalic.ttf,
+]  % left column of Experience
+
+% Additional IBM Plex Sans weights for the Experience left column
+\newfontfamily\PlexMedium{IBM Plex Sans}[
+    Path=/home/sanaruca/.fonts/,
+    UprightFont=IBMPlexSans-Medium.ttf,
+]
+\newfontfamily\PlexLight{IBM Plex Sans}[
+    Path=/home/sanaruca/.fonts/,
+    UprightFont=IBMPlexSans-Light.ttf,
+    ItalicFont=IBMPlexSans-LightItalic.ttf,
+]
+\newfontfamily\PlexExtraLight{IBM Plex Sans}[
+    Path=/home/sanaruca/.fonts/,
+    UprightFont=IBMPlexSans-ExtraLight.ttf,
+]
+\newfontfamily\PlexMonoMedium{IBM Plex Mono}[  % medium (500) for the T.S.U. line
+    Path=/home/sanaruca/.fonts/,
+    UprightFont=IBMPlexMono-Medium.ttf,
+    ItalicFont=IBMPlexMono-MediumItalic.ttf,
+]
+% DM Sans for the right side of the header (Light text, Medium labels)
+\newfontfamily\DMSansLight{DM Sans}[
+    Path=/home/sanaruca/.fonts/,
+    UprightFont=DMSans-Variable.ttf,
+    UprightFeatures={RawFeature={wght=300}},
+]
+\newfontfamily\DMSansMedium{DM Sans}[
+    Path=/home/sanaruca/.fonts/,
+    UprightFont=DMSans-Medium.ttf,
+]
+
+% =========================================================
+% 2. PAGE SETUP (Dynamic Layout)
+% =========================================================
+\usepackage{geometry}
+\geometry{left=0.9cm, right=0.9cm, top=1.3cm, bottom=0.5cm}
+
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{fontawesome5}
+\usepackage{hyperref}
+
+% KEY PACKAGE FOR THIS LAYOUT [SECTION_TITLE] | [INFO]
+\usepackage{paracol}
+
+% =========================================================
+% COLORS AND LINKS
+% =========================================================
+\definecolor{CVPrimary}{RGB}{0, 0, 0}     % Primary dark
+\definecolor{CVText}{RGB}{50, 50, 50}     % General text
+\definecolor{CVLine}{RGB}{217, 217, 217}  % Gray for separator lines (|)
+\definecolor{CVBullet}{RGB}{179, 179, 179}  % Gray for bullet markers (dashes)
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=CVPrimary,
+    urlcolor=CVPrimary,
+    pdftitle={Samir N. Ruza - Full-Stack Developer},
+    pdfauthor={Samir N. Ruza},
+    pdfsubject={Curriculum Vitae - Samir N. Ruza},
+    pdfkeywords={Curriculum Vitae, Samir Ruza, Full-Stack Developer, Node.js, TypeScript, Dart, Flutter, Golang, PHP, SQL, JavaScript, HTML, CSS, UI UX, Software Development}
+}
+
+\setlength{\parindent}{0pt} % Remove indentation
+
+% =========================================================
+% 3. CUSTOM COMMANDS
+% =========================================================
+
+% Section titles in the left column
+\newcommand{\CVSection}[1]{
+    \vspace{0.1cm}
+    \noindent{\large\bfseries\ttfamily\color{CVPrimary} \raggedright \MakeUppercase{#1}\par}
+    \vspace{0.5cm}
+}
+
+% Section titles in "Normal" (full width) mode
+\newcommand{\CVSectionNormal}[1]{
+    \vspace{1cm}
+    \noindent{\large\bfseries\ttfamily\color{CVPrimary} \MakeUppercase{#1}}\par
+    \vspace{0.5cm}
+}
+
+% Simple text block (profile) with side line
+\newcommand{\CVTextBlock}[1]{
+    \noindent
+    \textcolor{CVLine}{\vrule width 1pt} \hspace{1cm}
+    \begin{minipage}[t]{0.95\linewidth}
+        \raggedright {\DMSansLight #1}
+    \end{minipage}
+    \vspace{0.3cm}
+}
+
+% Education with side line
+\newcommand{\CVEdu}[3]{
+    \noindent
+    \textcolor{CVLine}{\vrule width 1pt} \hspace{1cm}
+    \begin{minipage}[t]{0.95\linewidth}
+        \textbf{#1} \hfill \textbf{\color{CVPrimary}#3} \\
+        \textit{#2}
+    \end{minipage}
+    \vspace{0.3cm}
+}
+
+% References
+\newcommand{\CVRef}[4]{
+    \noindent
+    \textcolor{CVLine}{\vrule width 1pt} \hspace{1cm}
+    \begin{minipage}[t]{0.42\textwidth}
+        {\PlexMedium #1} \\
+        {\PlexSans #2} \\
+        {\PlexLight #3} \\
+        {\DMSansMedium tel.}{\DMSansLight\ #4}
+    \end{minipage}
+}
+
+% Experience metadata block in the left column
+% Exact order: role / company / location / period (stacked)
+\newcommand{\CVExpMeta}[4]{
+    {\noindent
+    {\PlexMedium\color{CVPrimary} #1} \\
+    {\PlexSans #2} \\
+    {\PlexLight\itshape #3} \\
+    {\PlexExtraLight #4}}
+    \vspace{0.85cm}
+}
+
+% Description body in the right column of Experience
+\newcommand{\CVExpBody}[1]{
+    \noindent
+    \textcolor{CVLine}{\vrule width 1pt} \hspace{1cm}
+    \begin{minipage}[t]{0.92\linewidth}
+        \raggedright {\DMSansLight #1}
+    \end{minipage}
+    \vspace{0.8cm}
+}
+
+% Contact entry: fixed-width abbreviation (Medium) + value (Light)
+\newcommand{\CVContact}[2]{
+    {\DMSansMedium\makebox[1.1cm][l]{#1}} {\DMSansLight #2} \\[0.04cm]
+}
+
+% Education item: title / issuing entity / location / date (stacked)
+\newcommand{\CVEdItem}[4]{
+    \noindent
+    {\PlexMedium #1} \\
+    {\PlexSans #2} \\
+    {\PlexLight\itshape #3} \\
+    {\PlexExtraLight #4}
+    \vspace{0.85cm}
+}
+
+
+% =========================================================
+% REUSABLE HEADER (two columns with a gray line)
+% The '|' rule reaches the top edge of the page while
+% the name/contact are pushed down by the 'rule' padding.
+% =========================================================
+\newcommand{\CVHeader}{
+    {\topskip=0pt
+    \vspace*{-1.3cm}
+    \arrayrulecolor{CVLine}
+    \noindent
+    \begin{tabular}{@{}p{\dimexpr0.74\linewidth-0.6cm\relax}@{\hspace{0.4cm}}|@{\hspace{0.8cm}}p{\dimexpr0.26\linewidth-0.2cm\relax}@{}}
+    \rule{0pt}{2.3cm}
+    {\Huge\ttfamily\hspace*{-2.9pt}\addfontfeature{LetterSpace=30}\textbf{\MakeUppercase{Samir N. Ruza}}} \\[-5pt]
+    {\large\color{CVPrimary}\PlexMonoMedium Associate Computer Science Degree} \\[-5pt]
+    {\large\color{CVText}\ttfamily Full-Stack Developer}
+    &
+    \footnotesize
+    \begin{minipage}[t]{\linewidth}
+    \vspace*{-1.8cm}
+    \raggedright
+    \CVContact{tel.}{+58 424 9088 629}
+    \CVContact{em.}{sanaruca@gmail.com}
+    \CVContact{github}{/Sanaruca}
+    \end{minipage}
+    \end{tabular}}
+}
+
+\begin{document}
+
+% =========================================================
+% HEADER (page 1)
+% =========================================================
+\CVHeader
+\vspace{1cm}
+
+% =========================================================
+% START OF SPLIT LAYOUT
+% =========================================================
+\columnratio{0.22}               % 22% width for the left, 78% for the right
+\setlength{\columnsep}{1.6cm}    % Space between the text and the left column
+
+\begin{paracol}{2}
+
+% --- PROFESSIONAL PROFILE ---
+\CVSection{Professional Profile}
+\switchcolumn
+\vspace{0.1cm}
+\CVTextBlock{Software and systems developer focused on technological solutions for administrative management. Committed to delivering measurable results through accessible innovation and multidisciplinary teamwork. Flexible and adaptive approach, delivering scalable and sustainable products that respond to the specific needs of each project.}
+
+\end{paracol}
+
+% =========================================================
+% WORK EXPERIENCE - FULL WIDTH SECTION
+% Left column: role / company / location / period.
+% Right column: description and achievements.
+% =========================================================
+\CVSectionNormal{Experience}
+
+\setlength{\columnsep}{1.6cm}
+\begin{paracol}{2}
+\columnratio{0.22}
+
+% --- Entry 1 ---
+\CVExpMeta{Full-Stack Developer}
+{Freelance}
+{Remote}
+{OCT 2024 - JAN 2026}
+\switchcolumn
+\CVExpBody{
+Digital solutions, mobile applications, and digital commerce systems.
+\begin{itemize}[label=\textcolor{CVBullet}{–}, leftmargin=0.5cm, topsep=0.4cm, itemsep=0.15cm]
+    \item Implementation of secure payment methods and an appeals system on a digital sales platform.
+    \item Development of a mobile social networking application with integrated voice and video calls.
+\end{itemize}
+}
+\switchcolumn*
+
+% --- Entry 2 ---
+\CVExpMeta{Analyst}
+{DCTI / Monagas State Government}
+{Maturín, Monagas State}
+{SEP 2023 - OCT 2024}
+\switchcolumn
+\CVExpBody{
+Public entity dedicated to driving administrative modernization and efficiency.
+\begin{itemize}[label=\textcolor{CVBullet}{–}, leftmargin=0.5cm, topsep=0.4cm, itemsep=0.15cm]
+    \item Creation of a comprehensive system for organizing and controlling institutional events.
+    \item Development of an API for the proposal of a new Annual Operating Plan (POA) system.
+    \item Design of user modules with secure and personalized access.
+\end{itemize}
+}
+\switchcolumn*
+
+% --- Entry 3 ---
+\CVExpMeta{Full-Stack Developer}
+{Freelance}
+{Remote}
+{JAN 2022 - JUL 2023}
+\switchcolumn
+\CVExpBody{
+Development of customized technological solutions, focused on comprehensive web and mobile development services.
+\begin{itemize}[label=\textcolor{CVBullet}{–}, leftmargin=0.5cm, topsep=0.4cm, itemsep=0.15cm]
+    \item Design and implementation of attractive, functional web pages with HTML and CSS.
+    \item Creation of smart scripts to automate repetitive server tasks.
+    \item Implementation of a secure login and authorized access system (OAuth2).
+    \item Creation of a robust, scalable API for managing orders from live stores.
+\end{itemize}
+}
+
+\end{paracol}
+
+% =========================================================
+% CONTINUATION OF THE SPLIT LAYOUT (Education and References)
+% =========================================================
+\newpage
+% HEADER repeated (page 2)
+\CVHeader
+\vspace{1cm}
+\begin{paracol}{2}
+
+% --- EDUCATION ---
+\CVSection{Education}
+\switchcolumn
+\vspace{0.1cm}
+
+% Continuous gray line spanning the whole section
+\noindent
+\textcolor{CVLine}{\vrule width 1pt} \hspace{1cm}
+\begin{minipage}[t]{\dimexpr\linewidth-0.4cm-1.5pt}
+    \CVEdItem{Certificate in Introduction to AI Development}
+    {Big School}
+    {Online}
+    {MAR 2026}
+
+    \CVEdItem{Associate Computer Science Degree (T.S.U.)}
+    {Universidad Bolivariana de Venezuela}
+    {Maturín, Monagas State}
+    {DEC 2025}
+
+    \CVEdItem{Certification in Algorithms and Programming}
+    {Universidad Bolivariana de Venezuela}
+    {Maturín, Monagas State}
+    {FEB 2023}
+
+    \CVEdItem{Certification in Microenterprise Training}
+    {"Simón Rodríguez" Program - Monagas}
+    {Maturín, Monagas State}
+    {DEC 2021}
+\end{minipage}
+
+\end{paracol}
+
+% =========================================================
+% REFERENCES - FULL WIDTH SECTION
+% =========================================================
+\CVSectionNormal{References}
+
+\CVRef{Dr.C. Victor Rivas}{PhD in Pedagogical Sciences}{UBV}{+58 416 1819 143}
+\hfill
+\CVRef{Oduber Vasquez}{University Professional}{DCTI}{+58 424 9226 010}
+
+\vspace{0.2cm}
+
+% =========================================================
+% "NORMAL" MODE SECTIONS (Full Width)
+% =========================================================
+
+% --- SKILLS ---
+\CVSectionNormal{Skills}
+{\DMSansLight
+\begin{multicols}{2}
+    \textcolor{CVBullet}{–} Node.js \\
+    \textcolor{CVBullet}{–} TypeScript \\
+    \textcolor{CVBullet}{–} Dart / Flutter \\
+    \textcolor{CVBullet}{–} Golang \\
+    \textcolor{CVBullet}{–} PHP \\
+    \textcolor{CVBullet}{–} SQL \\
+    \textcolor{CVBullet}{–} HTML/CSS \\
+    \textcolor{CVBullet}{–} JavaScript \\
+    \textcolor{CVBullet}{–} UI/UX
+\end{multicols}
+}
+
+% --- EXTRACURRICULAR INTERESTS ---
+\CVSectionNormal{Extracurricular Interests}
+{\DMSansLight
+\textcolor{CVBullet}{–} Languages \\
+\textcolor{CVBullet}{–} Advertising and Marketing \\
+\textcolor{CVBullet}{–} E-commerce \\
+\textcolor{CVBullet}{–} Design \\
+\textcolor{CVBullet}{–} Systems Automation
+}
+
+\end{document}
