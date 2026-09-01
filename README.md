@@ -1,10 +1,6 @@
 <p align="right">
-  <a href="resume/resume-es.pdf">
-    <img src="https://img.shields.io/badge/📄_Resume_ES-6CC644?style=for-the-badge" alt="Resume ES"/>
-  </a>
-  <a href="resume/resume-en.pdf">
-    <img src="https://img.shields.io/badge/📄_Resume_EN-4078c0?style=for-the-badge" alt="Resume EN"/>
-  </a>
+  <a href="resume/resume-es.pdf"><img src="https://img.shields.io/badge/📄_Resume_ES-6CC644?style=for-the-badge" alt="Resume ES"/></a>&nbsp;
+  <a href="resume/resume-en.pdf"><img src="https://img.shields.io/badge/📄_Resume_EN-4078c0?style=for-the-badge" alt="Resume EN"/></a>
 </p>
 
 - 👋 Hi, I’m @Sanaruca
